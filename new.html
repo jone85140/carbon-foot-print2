@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Weekly Transport Carbon Emission Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: #7f8c8d;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        select, input[type="number"], input[type="text"] {
+            width: 100px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+        }
+
+        input[type="number"]:focus, select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #2980b9;
+        }
+
+        button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #2ecc71;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        .login-section, .calculator-section, .info-section {
+            display: none; /* Initially hide sections */
+        }
+
+        .login-section.active, .calculator-section.active, .info-section.active {
+            display: block; /* Show the active section */
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .info-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .info-container h2 {
+            color: #2c3e50;
+        }
+
+        .learn-more-button {
+            background-color: #3498db;
+            color: white;
+            margin: 20px auto;
+        }
+
+        .video-container {
+            margin: 20px auto;
+            max-width: 100%;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+        }
+
+        .external-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .external-link:hover {
+            text-decoration: underline;
+        }
+
+        .input-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .qr-code {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Login Section -->
+    <div class="login-section active">
+        <h1>Welcome to the Carbon Footprint Tracker</h1>
+        <p>Log in to access the Weekly Transport Carbon Emission Calculator</p>
+        
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" placeholder="Username" name="username" required><br>
+                <input type="password" placeholder="Password" name="password" required><br>
+                <button type="submit">Login</button>
+            </form>
+            <div class="sign-up-container">
+                <h3>Don't have an account?</h3>
+                <a href="signup.html">
+                    <button>Sign Up</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="info-section">
+        <div class="info-container">
+            <h2>What is a Carbon Footprint?</h2>
+            <p>A carbon footprint is the total amount of greenhouse gases (including carbon dioxide and methane) that are generated by our actions. Globally, the average carbon footprint is closer to 4 tons. To have the best chance of avoiding a 2℃ rise in global temperatures, the average global carbon footprint per year needs to drop to under 2 tons by 2050.</p>
+            <h3>How Can You Reduce Your Carbon Footprint?</h3>
+            <p>Lowering individual carbon footprints from 16 tons to 2 tons doesn’t happen overnight! By making small changes to our actions, like eating less meat, taking fewer connecting flights, and line drying our clothes, we can start making a big difference.</p>
+            <p>For more detailed information, visit the <a href="https://en.wikipedia.org/wiki/Carbon_footprint" class="external-link" target="_blank">Wikipedia page on Carbon Footprint</a>.</p>
+            <div class="qr-code">
+                <h3>Scan this QR Code for More Information:</h3>
+                <img src="qr.png" alt="QR Code">
+            </div>
+            <button onclick="showCalculator()">Go to Calculator</button>
+        </div>
+    </div>
+
+    <!-- Calculator Section -->
+    <div class="calculator-section">
+        <h1>Weekly Transport Carbon Emission Calculator</h1>
+        <p>Select the mode of transport for each day of the week and enter the distance to calculate the total carbon emission:</p>
+        
+        <!-- School Name Dropdown -->
+        <div>
+            <label for="schoolName">Select School:</label>
+            <select id="schoolName">
+                <option value="G M M S School">G M M S School</option>
+                <option value="AL Hilal Vidayalaya,">AL Hilal Vidayalaya,</option>
+                <option value="Km/Al Kamaroon Vidyalayam">Km/Al Kamaroon Vidyalayam</option>
+                <option value="Zahira College,">Zahira College,</option>
+                <option value="KM/KM/AL-JALAL VIDYALAYAM">KM/KM/AL-JALAL VIDYALAYAM</option>
+                <option value="Riyalul Jannah Vidyalaya">Riyalul Jannah Vidyalaya</option>
+                <option value="KM/KM/MALHARUS SHAMS MAHA VIDYALAYA,">KM/KM/MALHARUS SHAMS MAHA VIDYALAYA,</option>
+                <option value="School D">School D</option>
+                <!-- Add more schools as needed -->
+            </select>
+        </div>
+
+        <!-- School Code Input -->
+        <div class="input-container">
+            <label for="schoolCode">Enter School Code:</label>
+            <input type="text" id="schoolCode" placeholder="School Code">
+        </div>
+        
+        <!-- Input for distances -->
+        <div class="input-container">
+            <label for="distances">Enter distances for each day :</label>
+            <input type="text" id="distances" placeholder="total distances school from to school">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Mode of Transport</th>
+                </tr>
+            </thead>
+            <tbody id="inputRows">
+                <!-- Rows will be dynamically generated here -->
+            </tbody>
+        </table>
+
+        <button onclick="calculateTotal()">Calculate Total Carbon Emission</button>
+
+        <div class="result-container">
+            <h2> Total Carbon Emission: <span class="result" id="totalEmission">0</span> kg CO2</h2>
+        </div>
+        <a href="#" class="learn-more-button" onclick="showInfo()">Learn More About Carbon Footprints</a>
+    </div>
+
+    <script>
+        // Transport emission factors (kg CO2 per km)
+        const emissionFactors = {
+            'car': 0.95,
+            'bus': 9.2,
+            'foot': 0.0,
+            'motorbike': 0.57,
+            'van': 0.16,
+            'three-wheeler': 0.56
+        };
+
+        const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        // Dynamically generate input fields for each day of the week
+        const inputRows = document.getElementById('inputRows');
+        daysOfWeek.forEach((day, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${day}</td>
+                <td>
+                    <select id="transport${index}">
+                        <option value="car">Car</option>
+                        <option value="bus">Bus</option>
+                        <option value="foot">By Foot</option>
+                        <option value="motorbike">Motorbike</option>
+                        <option value="van">Van</option>
+                        <option value="three-wheeler">Three-Wheeler</option>
+                    </select>
+                </td>
+            `;
+            inputRows.appendChild(row);
+        });
+
+        // Function to calculate total carbon emission
+        function calculateTotal() {
+            let totalEmission = 0;
+            const distances = document.getElementById('distances').value.split(',').map(Number);
+
+            daysOfWeek.forEach((day, index) => {
+                const transport = document.getElementById(`transport${index}`).value;
+                const distance = distances[index] || 0;
+
+                // Calculate emission for the day and add to total
+                if (!isNaN(distance) && emissionFactors[transport] !== undefined) {
+                    totalEmission += distance * emissionFactors[transport];
+                }
+            });
+
+            // Display the total emission
+            document.getElementById('totalEmission').innerText = totalEmission.toFixed(2);
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            if (username && password) {
+                document.querySelector('.login-section').classList.remove('active');
+                document.querySelector('.calculator-section').classList.add('active');
+            } else {
+                alert('Please enter username and password.');
+            }
+        });
+
+        // Show info section
+        function showInfo() {
+            document.querySelector('.calculator-section').classList.remove('active');
+            document.querySelector('.info-section').classList.add('active');
+        }
+
+        // Show calculator section
+        function showCalculator() {
+            document.querySelector('.info-section').classList.remove('active');
+            document.querySelector('.calculator-section').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
